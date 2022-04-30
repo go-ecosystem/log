@@ -109,3 +109,29 @@ main.main()
 exit status 2
 make: *** [example] Error 1
 ```
+
+## Configuration
+
+- Production
+
+    ```go
+    encoderConf := zap.NewProductionEncoderConfig()
+    encoderConf.MessageKey = "message"
+    
+    conf := zap.NewProductionConfig()
+    conf.EncoderConfig = encoderConf
+    
+    logger, err = conf.Build(zap.AddCaller(),
+        zap.AddCallerSkip(1),
+        zap.AddStacktrace(zapcore.WarnLevel),
+        zap.Fields(fs...))
+    ```
+
+- Development
+
+    ```go
+    conf := zap.NewDevelopmentConfig()
+    logger, err = conf.Build(zap.AddCaller(),
+        zap.AddCallerSkip(1),
+        zap.AddStacktrace(zapcore.WarnLevel))
+    ```
