@@ -15,8 +15,7 @@ lint:
 	golangci-lint run -c .golangci.yml
 .PHONY: test
 test: mod
-	go test -gcflags=-l -coverpkg=./... -coverprofile=coverage.data ./...
-	go tool cover -html=coverage.data -o coverage.html;
+	sh scripts/test.sh
 update:
 	# https://github.com/golang/go/wiki/Modules#how-to-upgrade-and-downgrade-dependencies
 	go list -u -f '{{if (and (not (or .Main .Indirect)) .Update)}}{{.Path}}: {{.Version}} -> {{.Update.Version}}{{end}}' -m all 2> /dev/null	
